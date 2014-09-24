@@ -7,6 +7,7 @@
 //
 
 #import "GSMViewController.h"
+#import <GSMImageDownloader/GSMImageDownloader.h>
 
 @interface GSMViewController ()
 
@@ -17,7 +18,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    NSDictionary* parameters = @{
+                                 @"center": @"40.708336,-74.002525",
+                                 @"zoom": @"17",
+                                 @"size": @"320x568",
+                                 @"scale": @"2"
+                                 };
+    
+    [GSMImageDownloader downloadImageWithParameters:parameters
+                                       onCompletion:^(NSData * data) {
+                                           [self.mapImageView setImage:[UIImage imageWithData:data]];
+                                       }];
 }
 
 - (void)didReceiveMemoryWarning
