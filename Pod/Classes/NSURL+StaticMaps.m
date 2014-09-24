@@ -12,13 +12,20 @@
 @implementation NSURL (StaticMaps)
 
 + (NSURL*)URLForStaticMapsWithParameters:(NSDictionary*)parameters {
-    NSURLComponents *components = [NSURLComponents new];
-    [components setScheme:@"https"];
-    [components setHost:@"maps.googleapis.com"];
-    [components setPath:@"/maps/api/staticmap"];
-    [components setQuery:[NSString stringByAppendingQueryParameters:parameters]];
+    NSString* baseURL = @"https://maps.googleapis.com";
+    NSString* path = @"/maps/api/staticmap";
+    NSString* query = [NSString stringByAppendingQueryParameters:parameters];
     
-    return [components URL];
+    if ([query length] > 0) {
+        return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?%@",
+                                     baseURL,
+                                     path,
+                                     query]];
+    }
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
+                                 baseURL,
+                                 path]];
 }
 
 @end

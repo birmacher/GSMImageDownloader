@@ -6,37 +6,45 @@
 //  Copyright (c) 2014 Barnabás Birmacher. All rights reserved.
 //
 
+#import <GSMImageDownloader/GSMImageDownloader.h>
+
 SpecBegin(InitialSpecs)
 
-describe(@"these will fail", ^{
-
-    it(@"can do maths", ^{
-        expect(1).to.equal(2);
-    });
-
-    it(@"can read", ^{
-        expect(@"number").to.equal(@"string");
-    });
-    
-    it(@"will wait and fail", ^AsyncBlock {
-        
+describe(@"NSString string by appending query parameters", ^{
+    it(@"will generate valid string", ^{
+        NSString* queryParameters = [NSString stringByAppendingQueryParameters:@{
+                                                                                 @"center": @"40.708336,-74.002525",
+                                                                                 @"zoom": @"17",
+                                                                                 @"size": @"320x568",
+                                                                                 @"scale": @"2"
+                                                                                 }];
+        expect(queryParameters).to.equal(@"zoom=17&scale=2&size=320x568&center=40.708336,-74.002525");
     });
 });
 
-describe(@"these will pass", ^{
-    
-    it(@"can do maths", ^{
-        expect(1).beLessThan(23);
+describe(@"NSURL for static maps", ^{
+    it(@"will generate valid URL", ^{
+        NSURL* url = [NSURL URLForStaticMapsWithParameters:@{
+                                                             @"center": @"40.708336,-74.002525",
+                                                             @"zoom": @"17",
+                                                             @"size": @"320x568",
+                                                             @"scale": @"2"
+                                                             }];
+        
+        expect(url).to.equal([NSURL URLWithString:@"https://maps.googleapis.com/maps/api/staticmap?zoom=17&scale=2&size=320x568&center=40.708336,-74.002525"]);
     });
-    
-    it(@"can read", ^{
-        expect(@"team").toNot.contain(@"I");
-    });
-    
-    it(@"will wait and succeed", ^AsyncBlock {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            done();
-        });
+});
+
+describe(@"Requesting an image", ^{
+    it(@"will download a valid NSData image", ^{
+        [GSMImageDownloader downloadImageWithParameters:@{
+                                                          @"center": @"40.708336,-74.002525",
+                                                          @"zoom": @"17",
+                                                          @"size": @"320x568",
+                                                          @"scale": @"2"
+                                                          } onCompletion:^(NSData * data) {
+                                                              expect(data).notTo.beNil;
+                                                          }];
     });
 });
 

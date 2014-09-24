@@ -10,29 +10,23 @@
 Pod::Spec.new do |s|
   s.name             = "GSMImageDownloader"
   s.version          = "0.1.0"
-  s.summary          = "A short description of GSMImageDownloader."
+  s.summary          = "Downloads Google Maps images with Google Static Maps API"
   s.description      = <<-DESC
-                       An optional longer description of GSMImageDownloader
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
+                       Downloads Google Maps images with Google Static Maps API
+                       Google Maps Static API: https://developers.google.com/maps/documentation/staticmaps/index
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/GSMImageDownloader"
+  s.homepage         = "https://github.com/birmacher/GSMImageDownloader"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Barnabás Birmacher" => "birmacher@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/GSMImageDownloader.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/birmacher/GSMImageDownloader.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.platform     = :ios, '7.0'
+#s.platform     = :ios, '7.0'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes'
   s.resource_bundles = {
     'GSMImageDownloader' => ['Pod/Assets/*.png']
   }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
